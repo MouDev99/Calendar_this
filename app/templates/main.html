@@ -5,5 +5,45 @@
     </head>
     <body>
         <h1>Calendar working</h1>
+        <form action="" method="post">
+            {{ form.csrf_token() }}
+            {% for field in form %}
+                {% if field.type not in ["SubmitField", "CSRFTokenField"] %}
+                  <p>
+                    {{ field.label }}
+                    {{ field() }}
+                  </p>
+                {% else %}
+                  <p>
+                    {{ field() }}
+                  </p>
+                {% endif %}
+                {% if field.errors %}
+                  <ul>
+                    {% for error in field.errors %}
+                      <li> {{ error }} </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+            {% endfor %}
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id, name, start, end in rows %}
+                 <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ start.strftime("%H:%M") }}</td>
+                    <td>{{ end.strftime("%H:%M") }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </body>
 </html>
