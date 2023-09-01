@@ -1,0 +1,21 @@
+body {
+    background-color: aliceblue;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+form {
+    border: 1px solid black;
+    border-radius: 6px;
+    margin: 0% auto;
+    width: fit-content;
+}
+
+h1, h2, p, table {
+    margin: 0% auto;
+    text-align: center;
+    width: fit-content;
+}
+
+table {
+    border-radius: 6px;
+}

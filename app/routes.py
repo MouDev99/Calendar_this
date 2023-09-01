@@ -54,4 +54,4 @@ def daily(year, month, day):
                         )
             rows = curs.fetchall()
 
-    return render_template('main.html', rows=rows, form=form)
+    return render_template('main.html', rows=rows, day=day, next_day=next_day, form=form)

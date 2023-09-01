@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Calendar This</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/calendar.css') }}">
     </head>
     <body>
-        <h1>Calendar working</h1>
+        <h1>Calendar This</h1>
         <form action="" method="post">
             {{ form.csrf_token() }}
             {% for field in form %}
@@ -26,24 +27,51 @@
                   </ul>
                 {% endif %}
             {% endfor %}
-        </form>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Start</th>
-                    <th>End</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for id, name, start, end in rows %}
-                 <tr>
-                    <td>{{ name }}</td>
-                    <td>{{ start.strftime("%H:%M") }}</td>
-                    <td>{{ end.strftime("%H:%M") }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        </form> <br>
+        <h2>Appointments from {{ day.date() }} <br> to {{ next_day.date() }}</h2>
+        {% if rows | length == 0 %}
+            <p>No appointments!</p><br>
+        {% else %}
+            <table style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Start</th>
+                        <th>End</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id, name, start, end in rows %}
+                    <tr>
+                        <td>{{ name }}</td>
+                        <td>{{ start.strftime("%H:%M") }}</td>
+                        <td>{{ end.strftime("%H:%M") }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table><br>
+        {% endif %}
+
+        <form action="" method="post" id="change_date_form">
+            <fieldset style="border-radius: 6px; display: flex; flex-direction: column; gap: 6px; width: fit-content;">
+                <legend>Change Date: </legend>
+                <label for="year">Month / Day / Year: </label>
+                <input id="year" type="date" required>
+                <button type="submit">Change</button>
+            </fieldset>
+        </form> <br>
+        <script>
+            const change_date_form = document.getElementById("change_date_form")
+            change_date_form.addEventListener("submit", (e) => {
+                e.preventDefault()
+                const date = document.querySelector("#change_date_form input").value
+                const  [year, month, day] = date.split("-")
+                const url = `/${year}/${month}/${day}`
+
+                if ( url.includes("undefined") ) return
+
+                window.location.href = window.location.origin + url
+            })
+        </script>
     </body>
 </html>
